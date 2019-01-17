@@ -1,7 +1,9 @@
+# create your drupal and postgres config here, based off the last assignment
 version: '3'
-services:
- drupal:
-  image: drupal
+services: 
+ drupal: 
+  image: shakeer-drupal
+  build: .
   ports:
    - "8080:80"
   volumes:
@@ -9,20 +11,20 @@ services:
    - drupal-profiles:/var/www/html/profiles 
    - drupal-sites:/var/www/html/sites 
    - drupal-themes:/var/www/html/themes 
-  restart: always
+#  restart: always
   links: 
    - postgres:database
-  
  postgres:
-  image: postgres
+  image: postgres:9.6
   environment:
-   POSTGRES_PASSWORD: mypassword
+   - POSTGRES_PASSWORD=mypassword
   volumes:
    - drupal-data:/var/lib/postgresql/data
-  restart: always
+ # restart: always
 
 volumes:
  drupal-data:
+  driver: local
  drupal-modules:
  drupal-profiles:
  drupal-sites:
